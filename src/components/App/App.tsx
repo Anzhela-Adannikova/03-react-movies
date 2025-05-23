@@ -1,7 +1,8 @@
 import { useState } from "react";
-import css from "./App.module.css";
+// import css from "./App.module.css";
 import toast, { Toaster } from "react-hot-toast";
 import SearchBar from "../SearchBar/SearchBar";
+import MovieGrid from "../MovieGrid/MovieGrid";
 import { fetchMovies } from "../../services/movieService";
 import type { Movie } from "../../types/movie";
 
@@ -19,15 +20,17 @@ function App() {
     });
   };
 
+  const handleSlectMovie = (movie: Movie) => {
+    console.log("Select movie:", movie);
+  };
+
   return (
     <>
       <Toaster position="top-right" />
       <SearchBar onSubmit={handleSearch} />
-      <ul>
-        {movies.map((movie) => (
-          <li key={movie.id}>{movie.title}</li>
-        ))}
-      </ul>
+      {movies.length > 0 && (
+        <MovieGrid movies={movies} onSelect={handleSlectMovie} />
+      )}
     </>
   );
 }
