@@ -7,10 +7,7 @@ const API_URL = "https://api.themoviedb.org/3/search/movie";
 const TOKEN = import.meta.env.VITE_TMDB_TOKEN;
 
 interface FetchMoviesResponse {
-  //   page: number;
   results: Movie[];
-  //   total_pages: number;
-  //   total_results: number;
 }
 
 export const fetchMovies = (query: string): Promise<FetchMoviesResponse> => {
