@@ -14,8 +14,6 @@ export const fetchMovies = (query: string): Promise<FetchMoviesResponse> => {
   const config = {
     params: {
       query,
-      //   include_adult: false,
-      //   language: "ua-UK",
       page: 1,
     },
     headers: {
