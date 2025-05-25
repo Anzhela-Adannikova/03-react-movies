@@ -1,6 +1,4 @@
 // Компонент SearchBar приймає один пропс onSubmit – функцію для передачі значення інпуту під час сабміту форми.
-
-import { useState } from "react";
 import styles from "./SearchBar.module.css";
 import toast from "react-hot-toast";
 
@@ -8,21 +6,22 @@ interface SearchBarProps {
   onSubmit: (query: string) => void;
 }
 
-function SearchBar(props: SearchBarProps) {
-  const [query, setQuery] = useState("");
-
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+function SearchBar({ onSubmit }: SearchBarProps) {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const searchValue = query.trim();
+    const form = event.currentTarget;
+    const formData = new FormData(form);
+    const query = (formData.get("query") as string).trim();
 
-    if (searchValue === "") {
+    if (!query) {
       toast.error("Please enter your search query.");
       return;
     }
-    props.onSubmit(searchValue);
-    setQuery("");
-  }
+
+    onSubmit(query);
+    form.reset();
+  };
 
   return (
     <header className={styles.header}>
@@ -43,8 +42,6 @@ function SearchBar(props: SearchBarProps) {
             autoComplete="off"
             placeholder="Search movies..."
             autoFocus
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
           />
           <button className={styles.button} type="submit">
             Search
