@@ -14,7 +14,6 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleSearch = async (query: string) => {
     setMovies([]);
@@ -37,11 +36,9 @@ function App() {
 
   const handleSelectMovie = (movie: Movie) => {
     setSelectedMovie(movie);
-    setIsModalOpen(true);
   };
 
   const closeModal = () => {
-    setIsModalOpen(false);
     setSelectedMovie(null);
   };
 
@@ -51,7 +48,7 @@ function App() {
       <SearchBar onSubmit={handleSearch} />
       {isLoading && <Loader />}
       {isError && <ErrorMessage />}
-      {isModalOpen && selectedMovie && (
+      {selectedMovie && (
         <MovieModal movie={selectedMovie} onClose={closeModal} />
       )}
       {movies.length > 0 && (
